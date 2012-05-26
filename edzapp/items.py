@@ -16,3 +16,4 @@ class JobItem(Item):
     is_external = Field()
     date_posted = Field()
     deadline = Field()
+    description = Field()

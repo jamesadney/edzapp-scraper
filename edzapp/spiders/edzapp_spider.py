@@ -119,7 +119,11 @@ class EdZappPublicSpider(BaseSpider):
             job['url'] = url_prefix + href
             job['job_id'] = re.search('(\d+)$', href).groups()[0]
 
-            yield job
+            yield Request(
+                      job['url'],
+                      meta={'item': job},
+                      callback=self.parse_job_page
+                  )
 
         # Get next page
         current_page = table.select('tr[last()]//span[1]')
@@ -135,3 +139,10 @@ class EdZappPublicSpider(BaseSpider):
                                   },
                                   dont_click=True,
                                   callback=self.parse_tables)
+            
+    def parse_job_page(self, response):
+        hxs = HtmlXPathSelector(response)
+        job = response.meta['item']
+        
+        job['description'] = hxs.select('//span[@id="ctl00_oJobPosting_lblPositionDescription"]/text()').extract()
+        yield job
