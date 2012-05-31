@@ -16,6 +16,7 @@ USER_AGENT = 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/20080716
 DOWNLOAD_DELAY = 3
 
 ROLE = constants.ROLES['TEACHER/CLASSIFIED']
+PARSE_JOB_PAGES = True
 
 try:
     from local_settings import *

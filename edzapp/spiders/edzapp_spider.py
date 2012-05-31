@@ -59,12 +59,15 @@ class EdZappSpider(BaseSpider):
             href = row.select('td/a/@href').extract()[0]
             job['url'] = url_prefix + href
             job['job_id'] = re.search('(\d+)$', href).groups()[0]
-
-            yield Request(
-                      job['url'],
-                      meta={'item': job},
-                      callback=self.parse_job_page
-                  )
+            
+            if settings['PARSE_JOB_PAGES']:
+                yield Request(
+                          job['url'],
+                          meta={'item': job},
+                          callback=self.parse_job_page
+                      )
+            else:
+                yield job
 
         # Get next page
         current_page = table.select('tr[last()]//span[1]')
