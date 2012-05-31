@@ -92,6 +92,17 @@ class EdZappPublicSpider(BaseSpider):
                                 "__EVENTARGUMENT": ''
                             },
                             dont_click=True,
+                            callback=self.set_role)]
+        
+    def set_role(self, response):
+        return[FormRequest.from_response(
+                            response,
+                            formdata={
+                                'ctl00$ddlRole': settings['ROLE'],
+                                "__EVENTTARGET": 'ctl00$ddlRole',
+                                "__EVENTARGUMENT": ''
+                            },
+                            dont_click=True,
                             callback=self.parse_tables)]
 
     def parse_tables(self, response):
