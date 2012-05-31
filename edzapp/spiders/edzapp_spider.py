@@ -98,7 +98,7 @@ class EdZappPublicSpider(BaseSpider):
         return[FormRequest.from_response(
                             response,
                             formdata={
-                                'ctl00$ddlRole': '1',
+                                'ctl00$ddlRole': settings['ROLE'],
                                 "__EVENTTARGET": 'ctl00$ddlRole',
                                 "__EVENTARGUMENT": ''
                             },
