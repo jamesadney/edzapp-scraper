@@ -3,3 +3,4 @@ local_settings.py
 .pydevproject
 jobs.pkl
 *.pyc
+_data
