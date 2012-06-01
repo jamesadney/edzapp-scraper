@@ -8,13 +8,16 @@ Installation
 ############
 
 1. Install dependencies (Scrapy >= 0.14.4): ::
-   pip install -r requirements.txt
+   
+      pip install -r requirements.txt
 
 2. Clone repository: ::
-   git clone git://github.com/jamesadney/edzapp-scraper.git
+   
+      git clone git://github.com/jamesadney/edzapp-scraper.git
 
 Simple Usage
 ############
 
 From inside the cloned edzapp-scraper folder: ::
+   
    scrapy crawl edzapp -o jobs.csv -t csv
