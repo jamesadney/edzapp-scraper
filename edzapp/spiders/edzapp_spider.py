@@ -88,5 +88,5 @@ class EdZappSpider(BaseSpider):
         hxs = HtmlXPathSelector(response)
         job = response.meta['item']
         
-        job['description'] = hxs.select('//span[@id="ctl00_oJobPosting_lblPositionDescription"]/text()').extract()
+        job['description'] = hxs.select('//span[@id="ctl00_oJobPosting_lblPositionDescription"]//text()').extract()
         yield job
