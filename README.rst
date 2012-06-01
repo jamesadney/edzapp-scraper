@@ -2,7 +2,9 @@
 Edzapp Scraper
 ##############
 
-This is a little scraper I hacked together to pull job listings off of EdZapp to simplify the search process.
+This is a little scraper I hacked together to pull job listings off of 
+EdZapp to simplify the search process.  It isn't beautiful, but
+hopefully it can be of some use to you!
 
 Installation
 ############
