@@ -17,3 +17,8 @@ class JobItem(Item):
     date_posted = Field()
     deadline = Field()
     description = Field()
+    application_method = Field()
+    grade_levels = Field()
+    subject_areas = Field()
+    employer_website = Field()
+    local_contact = Field()
