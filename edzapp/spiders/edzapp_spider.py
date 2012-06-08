@@ -94,4 +94,5 @@ class EdZappSpider(BaseSpider):
         job['subject_areas'] = hxs.select('//span[@id="ctl00_oJobPosting_lblSubject"]//text()').extract()
         job['employer_website'] = hxs.select('//span[@id="ctl00_oJobPosting_lblURL"]/a/@href').extract()[0]
         job['local_contact'] = hxs.select('//span[@id="ctl00_oJobPosting_lblContact"]//text()').extract()
+        job['community_description'] = hxs.select('//span[@id="ctl00_oJobPosting_lblCommunityDescription"]//text()').extract()
         yield job

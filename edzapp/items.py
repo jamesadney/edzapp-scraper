@@ -22,3 +22,4 @@ class JobItem(Item):
     subject_areas = Field()
     employer_website = Field()
     local_contact = Field()
+    community_description = Field()
