@@ -1,8 +1,8 @@
-# Define your item pipelines here
-#
-# Don't forget to add your pipeline to the ITEM_PIPELINES setting
-# See: http://doc.scrapy.org/topics/item-pipeline.html
+from datetime import datetime
 
-class EdzappPipeline(object):
+class DjangoJobPipeline(object):
     def process_item(self, item, spider):
+        item['deadline'] = datetime.strptime(item['deadline'], '%d/%m/%Y')
+        item['date_posted'] = datetime.strptime(item['date_posted'], '%d/%m/%Y')
+        item.save()
         return item

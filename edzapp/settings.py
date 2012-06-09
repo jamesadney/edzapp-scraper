@@ -13,10 +13,21 @@ BOT_VERSION = '1.0'
 SPIDER_MODULES = ['edzapp.spiders']
 NEWSPIDER_MODULE = 'edzapp.spiders'
 USER_AGENT = 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008071615 Fedora/3.0.1-1.fc9 Firefox/3.0.1'
+ITEM_PIPELINES = [
+    'edzapp.pipelines.DjangoJobPipeline',
+]
 DOWNLOAD_DELAY = 3
 
 ROLE = constants.ROLES['TEACHER/CLASSIFIED']
 PARSE_JOB_PAGES = True
+
+import sys, os
+
+# Add the directory containing your django project to the path!!
+sys.path.insert(0, '/home/james/aptana_workspace/edzapp/edzapp/django_edzapp/')
+
+# Set the django settings environment variable
+os.environ['DJANGO_SETTINGS_MODULE'] = 'django_edzapp.settings'
 
 try:
     from local_settings import *
