@@ -24,11 +24,52 @@ From inside the cloned edzapp-scraper folder: ::
    
    scrapy crawl edzapp -o jobs.csv -t csv
 
+Django Site
+###########
+
+I'm working on a Django frontend for the scraped data.  Currently, all it does
+is store the scraped data in a database.
+
+Setting up the Django project
+-----------------------------
+
+Generate a ``SECRET_KEY``
+'''''''''''''''''''''''''
+
+::
+
+   >>> import os
+   >>> os.urandom(24)
+   '\xf3!\xd5\x8d\x07\x98\xa2\x0b\xf4\xc0Y]$\x11\x8aJ\xb3\x8fk\'\xa4"\xe9P'
+   >>> # Of course, don't use this key!
+    
+
+Add the key to ``./edzapp/django_edzapp/django_edzapp/settings.py``.
+
+Initialize the database
+'''''''''''''''''''''''
+
+From ``./edzapp/django_edzapp/`` run: ::
+
+   python manage.py syncdb
+
+Enable the ``DjangoJobPipeline``
+''''''''''''''''''''''''''''''''
+
+Uncomment ``'edzapp.pipelines.DjangoJobPipeline',`` in ``settings.py``. ::
+
+   ITEM_PIPELINES = [
+   #    'edzapp.pipelines.DjangoJobPipeline',
+   ]
+
+
 Customization
 #############
 
 Disable scraping job pages
 --------------------------
+
+**Disabling this will probably break the Django site**
 
 By default, the scraper opens the link for each job to pull information from
 the job's page.  This significantly increases the amount of time required to
