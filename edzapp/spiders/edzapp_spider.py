@@ -6,7 +6,7 @@ from scrapy.http import FormRequest, Request
 from scrapy.selector import HtmlXPathSelector
 from scrapy.spider import BaseSpider
 
-from edzapp.items import JobItem
+from edzapp.items import JobItem, JobItemLoader
 
 class EdZappSpider(BaseSpider):
     name = "edzapp"
@@ -51,19 +51,24 @@ class EdZappSpider(BaseSpider):
                    'deadline']
 
         for row in rows[1:]:
-            job = JobItem()
+            l = JobItemLoader(item=JobItem(), response=response)
             values = row.select('td')
 
             for header, value in zip(headers, values):
-                job[header] = ''.join(value.select('.//text()').extract()).strip()
+                data = u''.join(value.select('.//text()').extract()).strip()
+                l.add_value(header, data)
+
             href = row.select('td/a/@href').extract()[0]
-            job['url'] = url_prefix + href
-            job['job_id'] = re.search('(\d+)$', href).groups()[0]
+            job_url = url_prefix + href
+            l.add_value('url', job_url)
+
+            job_id = re.search('(\d+)$', href).groups()[0]
+            l.add_value('job_id', job_id)
             
             if settings['PARSE_JOB_PAGES']:
                 yield Request(
-                          job['url'],
-                          meta={'item': job},
+                          job_url,
+                          meta={'itemloader': l},
                           callback=self.parse_job_page
                       )
             else:
@@ -86,13 +91,27 @@ class EdZappSpider(BaseSpider):
             
     def parse_job_page(self, response):
         hxs = HtmlXPathSelector(response)
-        job = response.meta['item']
+        l = response.meta['itemloader']
         
-        job['description'] = hxs.select('//span[@id="ctl00_oJobPosting_lblPositionDescription"]//text()').extract()
-        job['application_method'] = hxs.select('//span[@id="ctl00_oJobPosting_lblCategory"]//text()').extract()
-        job['grade_levels'] = hxs.select('//span[@id="ctl00_oJobPosting_lblGrade"]//text()').extract()
-        job['subject_areas'] = hxs.select('//span[@id="ctl00_oJobPosting_lblSubject"]//text()').extract()
-        job['employer_website'] = hxs.select('//span[@id="ctl00_oJobPosting_lblURL"]/a/@href').extract()[0]
-        job['local_contact'] = hxs.select('//span[@id="ctl00_oJobPosting_lblContact"]//text()').extract()
-        job['community_description'] = hxs.select('//span[@id="ctl00_oJobPosting_lblCommunityDescription"]//text()').extract()
-        yield job
+        description = hxs.select('//span[@id="ctl00_oJobPosting_lblPositionDescription"]//text()').extract()
+        l.add_value('description', description)
+
+        application_method = hxs.select('//span[@id="ctl00_oJobPosting_lblCategory"]//text()').extract()
+        l.add_value('application_method', application_method)
+
+        grade_levels = hxs.select('//span[@id="ctl00_oJobPosting_lblGrade"]//text()').extract()
+        l.add_value('grade_levels', grade_levels)
+
+        subject_areas = hxs.select('//span[@id="ctl00_oJobPosting_lblSubject"]//text()').extract()
+        l.add_value('subject_areas', subject_areas)
+
+        employer_website = hxs.select('//span[@id="ctl00_oJobPosting_lblURL"]/a/@href').extract()[0]
+        l.add_value('employer_website', employer_website)
+
+        local_contact = hxs.select('//span[@id="ctl00_oJobPosting_lblContact"]//text()').extract()
+        l.add_value('local_contact', local_contact)
+
+        community_description = hxs.select('//span[@id="ctl00_oJobPosting_lblCommunityDescription"]//text()').extract()
+        l.add_value('community_description', community_description)
+
+        return l.load_item()
