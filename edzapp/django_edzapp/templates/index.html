@@ -1,0 +1,32 @@
+
+{% extends "base.html" %}
+{% block style %}
+<style>
+#saved-jobs {
+	position: fixed;
+}
+</style>
+{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="span8">
+		<div class="page-header">
+			<h2>All Jobs</h2>
+		</div>
+		<ol>
+		{% for job in jobs %}
+		<li>
+			<a href={{job.url}}>{{ job.position }}</a>
+		</li>
+		{% endfor %}
+		</ol>
+	</div>
+	<div class="span4">
+		<div class="span4" id="saved-jobs">
+			<div class="page-header">
+				<h2>Saved</h2>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

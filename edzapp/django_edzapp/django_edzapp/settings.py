@@ -58,7 +58,7 @@ MEDIA_ROOT = ''
 MEDIA_URL = ''
 
 STATICFILES_DIRS = (
-    os.path.join(SITE_ROOT, 'static'),
+    os.path.join(SITE_ROOT, 'django_edzapp/static'),
 )
 STATIC_ROOT = os.path.join(SITE_ROOT, 'static')
 STATIC_URL = '/static/'
