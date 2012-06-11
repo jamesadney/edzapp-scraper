@@ -2,10 +2,10 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Job(models.Model):
+    job_id = models.IntegerField(primary_key=True)
     user = models.ManyToManyField(User)
     position = models.CharField(max_length=200, null=True, blank=True)
     url = models.URLField()
-    job_id = models.IntegerField()
     organization = models.CharField(max_length=200, null=True, blank=True)
     school_name = models.TextField(null=True, blank=True)
     job_type = models.CharField(max_length=200, null=True, blank=True)
