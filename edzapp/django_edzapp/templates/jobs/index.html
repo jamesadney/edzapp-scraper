@@ -9,23 +9,42 @@
 {% endblock %}
 {% block content %}
 <div class="row">
-	<div class="span8">
+	<div class="span8" id="all-jobs">
 		<div class="page-header">
 			<h2>All Jobs</h2>
 		</div>
-		<ol>
-		{% for job in jobs %}
-		<li>
-			<a href={{job.url}}>{{ job.position }}</a>
-		</li>
-		{% endfor %}
-		</ol>
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Deadline</th>
+					<th>Position</th>
+					<th>Organization</th>
+				</td>
+			</thead>
+			<tbody>
+				{% for job in jobs %}
+				<tr>
+					<td>{{job.deadline|date:"SHORT_DATE_FORMAT"}}</td>
+					<td><a href={{job.url}}>{{ job.position }}</a></td>
+					<td>{{job.organization}}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		</ul>
 	</div>
 	<div class="span4">
 		<div class="span4" id="saved-jobs">
 			<div class="page-header">
 				<h2>Saved</h2>
 			</div>
+			<ul>
+			{% for job in saved_jobs %}
+			<li>
+				<a href={{job.url}}>{{ job.position }}</a>
+			</li>
+			{% endfor %}
+			</ul>
 		</div>
 	</div>
 </div>
