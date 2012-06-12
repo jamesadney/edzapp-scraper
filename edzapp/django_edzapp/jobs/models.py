@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 class Job(models.Model):
     job_id = models.IntegerField(primary_key=True)
+    #FIXME: field should be 'users' not 'user'
     user = models.ManyToManyField(User)
     position = models.CharField(max_length=200, null=True, blank=True)
     url = models.URLField()
