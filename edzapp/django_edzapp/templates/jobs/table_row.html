@@ -1,0 +1,22 @@
+<tr>
+	<td class="star-job">
+	{% if job in user.job_set.all %}
+		<a title="Star this job" href=/jobs/{{job.job_id}}/unstar/>
+			<i class="icon-star"></i>
+		</a>
+	{% else %}
+		<a title="Star this job" href=/jobs/{{job.job_id}}/star/>
+			<i class="icon-star-empty"></i>
+		</a>
+	{% endif %}
+	</td>
+	<td>
+		{{ job.deadline|date:"SHORT_DATE_FORMAT"|default:"Open until filled" }}
+	</td>
+	<td>
+		<a href={{job.url}} title="Visit job on EdZapp">
+			{{ job.position }}
+		</a>
+	</td>
+	<td>{{ job.organization|title }}</td>
+</tr>

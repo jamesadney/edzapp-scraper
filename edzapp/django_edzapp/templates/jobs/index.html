@@ -23,20 +23,10 @@
 			</thead>
 			<tbody>
 				{% for job in jobs %}
-				<tr>
-					<td>{% if job in user.job_set.all %}Yes{% else %}No{% endif %}</td>
-					<td>{{job.deadline|date:"SHORT_DATE_FORMAT"}}</td>
-					<td><a href={{job.url}} title="Visit job on EdZapp">{{ job.position }}</a></td>
-					<td>{{job.organization}}</td>
-				</tr>
+					{% include "jobs/table_row.html" %}
 				{% endfor %}
 				{% for job in no_deadlines %}
-				<tr>
-					<td>{% if job in user.job_set.all %}Yes{% else %}No{% endif %}</td>
-					<td>Open until Filled</td>
-					<td><a href={{job.url}} title="Visit job on EdZapp">{{ job.position }}</a></td>
-					<td>{{job.organization}}</td>
-				</tr>
+					{% include "jobs/table_row.html" %}
 				{% endfor %}
 			</tbody>
 		</table>
