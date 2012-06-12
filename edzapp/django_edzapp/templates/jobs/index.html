@@ -2,17 +2,19 @@
 {% extends "base.html" %}
 {% block style %}
 <style>
-#saved-jobs {
-	position: fixed;
-}
+	#content {
+		margin-top: 40px;
+		margin-bottom: 40px;
+	}
+	#saved-jobs {
+		position: fixed;
+	}
 </style>
 {% endblock %}
 {% block content %}
 <div class="row">
 	<div class="span8" id="all-jobs">
-		<div class="page-header">
-			<h2>All Jobs</h2>
-		</div>
+		<h2>All Jobs</h2>
 		<table class="table table-striped table-bordered">
 			<thead>
 				<tr><th></th>
@@ -34,13 +36,11 @@
 	</div>
 	<div class="span4">
 		<div class="span4" id="saved-jobs">
-			<div class="page-header">
-				<h2>Starred</h2>
-			</div>
+			<h2>Starred</h2>
 			<ul>
 			{% for job in user.job_set.all %}
 			<li>
-				<a href={% url jobs.views.detail job.job_id %}>{{ job.position }}</a>
+				<a title="Details" href={% url jobs.views.detail job.job_id %}>{{ job.position }}</a>
 			</li>
 			{% endfor %}
 			</ul>

@@ -1,7 +1,53 @@
 {% extends "base.html" %}
-
+{% block style %}
+<style>
+	#content {
+		margin-top: 40px;
+		margin-bottom: 40px;
+	}
+	#saved-jobs {
+		position: fixed;
+	}   
+</style>
+{% endblock %}
 {% block content %}
-<header>
-	<h1>{{ job.position }}</h1>
-</header>
+<div class="row">
+	<div class="span8">
+		<div>
+			<h1><a title="Visit job on EdZapp" href={{ job.url }}>{{ job.position }}</a></h1>
+			<h2><a title="Visit Employer Website" href={{ job.employer_website }}>{{ job.organization|upper }}</a></h2>
+			{% if job.school_name %}
+			<h3>{{ job.school_name|upper }}</h3>
+			{% endif %}
+		</div>
+		{% if job.description %}
+		<div class="page-header">
+			<h3>Description</h3>
+		</div>
+		<div>
+			{{ job.description }}
+		</div>
+		{% endif %}
+		{% if job.community_description %}
+		<div class="page-header">
+			<h3>Community Description</h3>
+		</div>
+		<div>
+			{{ job.community_description }}
+		</div>
+		{% endif %}
+	</div>
+	<div class="span4">
+		<div class="span4" id="saved-jobs">
+			<h2>Starred</h2>
+			<ul>
+			{% for job in user.job_set.all %}
+			<li>
+				<a title="Details" href={% url jobs.views.detail job.job_id %}>{{ job.position }}</a>
+			</li>
+			{% endfor %}
+			</ul>
+		</div>
+	</div>
+</div>
 {% endblock %}
