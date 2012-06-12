@@ -1,3 +1,4 @@
+from datetime import date
 import json
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -5,7 +6,7 @@ from django.shortcuts import render
 from jobs.models import Job
 
 def index(request):
-    jobs = Job.objects.exclude(deadline=None).order_by("deadline")
+    jobs = Job.objects.exclude(deadline=None).filter(deadline__gte=date.today()).order_by("deadline")
     no_deadlines = Job.objects.exclude(date_posted=None).filter(deadline=None).order_by("date_posted")
     return render(request, 'jobs/index.html', {"jobs" : jobs, 
                                                 "no_deadlines" : no_deadlines})
