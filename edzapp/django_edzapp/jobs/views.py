@@ -5,9 +5,13 @@ from jobs.models import Job
 
 def index(request):
     jobs = Job.objects.exclude(deadline=None).order_by("deadline")
+    no_deadlines = Job.objects.exclude(date_posted=None).filter(deadline=None).order_by("date_posted")
+
     saved_jobs = request.user.job_set.all()
     return render_to_response('jobs/index.html',
-                              {"jobs" : jobs, "saved_jobs": saved_jobs},
+                              {"jobs" : jobs, 
+                               "no_deadlines" : no_deadlines,
+                               "saved_jobs": saved_jobs},
                               context_instance=RequestContext(request))
 
 def all(request):
