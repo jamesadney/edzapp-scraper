@@ -51,7 +51,7 @@
 {% block scripts %}
 <script>
 	$(document).ready(function(){
-		$("td.star-job").on("click", "a", function(e) {
+		$("a.star-job").click(function(e) {
 			console.log("star clicked");
 			e.preventDefault();
 			var dest = $(this).attr("href");
