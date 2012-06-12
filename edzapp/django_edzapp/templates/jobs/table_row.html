@@ -1,11 +1,11 @@
 <tr>
 	<td>
 	{% if job in user.job_set.all %}
-		<a style="display: none;" class="star-job" title="Remove star" href={% url jobs.views.unstar job.job_id %}>
+		<a style="/*display: none;*/" class="star-job" title="Remove star" href={% url jobs.views.unstar job.job_id %}>
 			<i id="star-{{ job.job_id }}" class="icon-star"></i>
 		</a>
 	{% else %}
-		<a style="display: none;" class="star-job" title="Star this job" href={% url jobs.views.star job.job_id %}>
+		<a style="/*display: none;*/" class="star-job" title="Star this job" href={% url jobs.views.star job.job_id %}>
 			<i id="star-{{ job.job_id }}" class="icon-star-empty"></i>
 		</a>
 	{% endif %}

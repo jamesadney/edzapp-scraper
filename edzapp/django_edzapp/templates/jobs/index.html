@@ -52,7 +52,11 @@
 <script>
 	$(document).ready(function(){
 		$starLinks = $("a.star-job");
+		/*
+		// TOO SLOW
+		// Prevent user from clicking on star early and getting GET request
 		$starLinks.show()
+		*/
 		$starLinks.click(function(e) {
 			console.log("star clicked");
 			e.preventDefault();
