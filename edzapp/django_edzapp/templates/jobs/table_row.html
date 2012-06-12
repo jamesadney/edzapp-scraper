@@ -1,12 +1,12 @@
 <tr>
 	<td>
 	{% if job in user.job_set.all %}
-		<a class="star-job" title="Star this job" href=/jobs/{{job.job_id}}/unstar/>
-			<i class="icon-star"></i>
+		<a style="display: none;" class="star-job" title="Remove star" href=/jobs/{{ job.job_id }}/unstar/>
+			<i id="star-{{ job.job_id }}" class="icon-star"></i>
 		</a>
 	{% else %}
-		<a class="star-job" title="Star this job" href=/jobs/{{job.job_id}}/star/>
-			<i class="icon-star-empty"></i>
+		<a style="display: none;" class="star-job" title="Star this job" href=/jobs/{{ job.job_id }}/star/>
+			<i id="star-{{ job.job_id }}" class="icon-star-empty"></i>
 		</a>
 	{% endif %}
 	</td>
@@ -14,7 +14,7 @@
 		{{ job.deadline|date:"SHORT_DATE_FORMAT"|default:"Open until filled" }}
 	</td>
 	<td>
-		<a href={{job.url}} title="Visit job on EdZapp">
+		<a href={{ job.url }} title="Visit job on EdZapp">
 			{{ job.position }}
 		</a>
 	</td>

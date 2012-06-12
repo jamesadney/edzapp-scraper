@@ -51,14 +51,70 @@
 {% block scripts %}
 <script>
 	$(document).ready(function(){
-		$("a.star-job").click(function(e) {
+		$starLinks = $("a.star-job");
+		$starLinks.show()
+		$starLinks.click(function(e) {
 			console.log("star clicked");
 			e.preventDefault();
-			var dest = $(this).attr("href");
+			$link = $(this);
+			var dest = $link.attr("href");
 			$.post(dest, function(data) {
-		  		console.log("successfully posted to: " + dest)
+				d = data;
+		  		if (data.type === "star") {
+		  			$("#star-"+data.job_id).attr("class", "icon-star");
+		  			$link.attr({
+		  				"href": "/jobs/"+data.job_id+"/unstar/",
+		  				"title": "Unstar job"
+		  			});
+		  		} else if (data.type === "unstar") {
+		  			$("#star-"+data.job_id).attr("class", "icon-star-empty");
+		  			$link.attr({
+		  				"href": "/jobs/"+data.job_id+"/star/",
+		  				"title": "Star this job"
+		  			});
+		  		} else {
+		  			console.log("ERROR: Response didn't return star type")
+		  		}
 			});
 		});
 	 });
+
+	// Fix csrf for AJAX POST Requests
+	jQuery(document).ajaxSend(function(event, xhr, settings) {
+	    function getCookie(name) {
+	        var cookieValue = null;
+	        if (document.cookie && document.cookie != '') {
+	            var cookies = document.cookie.split(';');
+	            for (var i = 0; i < cookies.length; i++) {
+	                var cookie = jQuery.trim(cookies[i]);
+	                // Does this cookie string begin with the name we want?
+	                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+	                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+	                    break;
+	                }
+	            }
+	        }
+	        return cookieValue;
+	    }
+	    function sameOrigin(url) {
+	        // url could be relative or scheme relative or absolute
+	        var host = document.location.host; // host + port
+	        var protocol = document.location.protocol;
+	        var sr_origin = '//' + host;
+	        var origin = protocol + sr_origin;
+	        // Allow absolute or scheme relative URLs to same origin
+	        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+	            (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+	            // or any other URL that isn't scheme relative or absolute i.e relative.
+	            !(/^(\/\/|http:|https:).*/.test(url));
+	    }
+	    function safeMethod(method) {
+	        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+	    }
+
+	    if (!safeMethod(settings.type) && sameOrigin(settings.url)) {
+	        xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+	    }
+	});
 </script>
 {% endblock %}

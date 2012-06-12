@@ -1,3 +1,5 @@
+import json
+from django.http import HttpResponse
 from django.shortcuts import render
 
 from jobs.models import Job
@@ -19,17 +21,21 @@ def detail(request, job_id):
 
 def star(request, job_id):
     #TODO: fix csrf
-    if request.method == "POST":
+    if request.method == 'POST':
         job = Job.objects.get(job_id=job_id)
         request.user.job_set.add(job)
-        return
+        data = json.dumps({'type' : 'star', 'job_id' : job_id})
+        response = HttpResponse(data, mimetype='application/json')
+        return response
     else:
-        render(request, 'jobs/star.html')
+        return render(request, 'jobs/star.html')
 
 def unstar(request, job_id):
-    if request.method == "POST":
+    if request.method == 'POST':
         job = Job.objects.get(job_id=job_id)
         request.user.job_set.remove(job)
-        return
+        data = json.dumps({'type' : 'unstar', 'job_id' : job_id})
+        response = HttpResponse(data, mimetype='application/json')
+        return response
     else:
-        render(request, 'jobs/unstar.html')
+        return render(request, 'jobs/unstar.html')
