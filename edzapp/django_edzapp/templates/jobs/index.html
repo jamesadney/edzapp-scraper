@@ -15,7 +15,7 @@
 		</div>
 		<table class="table table-striped table-bordered">
 			<thead>
-				<tr><th>Saved</th>
+				<tr><th></th>
 					<th>Deadline</th>
 					<th>Position</th>
 					<th>Organization</th>
@@ -35,7 +35,7 @@
 	<div class="span4">
 		<div class="span4" id="saved-jobs">
 			<div class="page-header">
-				<h2>Saved</h2>
+				<h2>Starred</h2>
 			</div>
 			<ul>
 			{% for job in user.job_set.all %}
@@ -47,4 +47,18 @@
 		</div>
 	</div>
 </div>
+{% endblock %}
+{% block scripts %}
+<script>
+	$(document).ready(function(){
+		$("td.star-job").on("click", "a", function(e) {
+			console.log("star clicked");
+			e.preventDefault();
+			var dest = $(this).attr("href");
+			$.post(dest, function(data) {
+		  		console.log("successfully posted to: " + dest)
+			});
+		});
+	 });
+</script>
 {% endblock %}
