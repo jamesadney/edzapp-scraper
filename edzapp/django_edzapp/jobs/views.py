@@ -10,8 +10,7 @@ def index(request):
     saved_jobs = request.user.job_set.all()
     return render_to_response('jobs/index.html',
                               {"jobs" : jobs, 
-                               "no_deadlines" : no_deadlines,
-                               "saved_jobs": saved_jobs},
+                               "no_deadlines" : no_deadlines},
                               context_instance=RequestContext(request))
 
 def all(request):
