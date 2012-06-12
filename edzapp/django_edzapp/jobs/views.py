@@ -1,7 +1,7 @@
 from datetime import date
 import json
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 from jobs.models import Job
 
@@ -18,7 +18,8 @@ def saved(request):
     return render(request, 'jobs/saved.html')
 
 def detail(request, job_id):
-    return render(request, 'jobs/detail.html')
+    job = get_object_or_404(Job, job_id=job_id)
+    return render(request, 'jobs/detail.html', {"job": job})
 
 def star(request, job_id):
     #TODO: fix csrf
