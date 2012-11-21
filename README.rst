@@ -9,13 +9,13 @@ hopefully it can be of some use to you!
 Installation
 ############
 
-1. Install dependencies (Scrapy >= 0.14.4): ::
-   
-      pip install -r requirements.txt
-
-2. Clone repository: ::
+1. Clone repository: ::
    
       git clone git://github.com/jamesadney/edzapp-scraper.git
+
+2. Install dependencies (Scrapy >= 0.14.4): ::
+   
+      pip install -r requirements.txt
 
 Simple Usage
 ############
