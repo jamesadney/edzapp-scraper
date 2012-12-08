@@ -23,8 +23,10 @@ PARSE_JOB_PAGES = True
 
 import sys, os
 
-# Add the directory containing your django project to the path!!
-sys.path.insert(0, '/home/james/aptana_workspace/edzapp/edzapp/django_edzapp/')
+# Directory containing django project
+PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
+
+sys.path.insert(0, os.path.join(PROJECT_ROOT, 'django_edzapp'))
 
 # Set the django settings environment variable
 os.environ['DJANGO_SETTINGS_MODULE'] = 'django_edzapp.settings'
