@@ -15,25 +15,24 @@ class EdZappSpider(BaseSpider):
 
     def parse(self, response):
         return[FormRequest.from_response(
-                            response,
-                            formdata={
-                                'ctl00$ddlResults': '100',
-                                "__EVENTTARGET": 'ctl00$ddlResults',
-                                "__EVENTARGUMENT": ''
-                            },
-                            dont_click=True,
-                            callback=self.set_role)]
-        
-    def set_role(self, response):
+            response,
+            formdata={
+            "ctl00$btnAllJobs": "display all jobs"
+            },
+            dont_click=True,
+            callback=self.show_max_results)]
+
+    # Show 100 results per page to minimize number of requests
+    def show_max_results(self, response):
         return[FormRequest.from_response(
-                            response,
-                            formdata={
-                                'ctl00$ddlRole': settings['ROLE'],
-                                "__EVENTTARGET": 'ctl00$ddlRole',
-                                "__EVENTARGUMENT": ''
-                            },
-                            dont_click=True,
-                            callback=self.parse_tables)]
+            response,
+            formdata={
+            "ctl00$ddlResults": "100",
+                                "__EVENTTARGET": "ctl00$ddlResults",
+                                "__EVENTARGUMENT": ""
+            },
+            dont_click=True,
+            callback=self.parse_tables)]
 
     def parse_tables(self, response):
         hxs = HtmlXPathSelector(response)
