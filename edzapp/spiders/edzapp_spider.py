@@ -1,12 +1,12 @@
 import re
 
-from scrapy import log
 from scrapy.conf import settings
 from scrapy.http import FormRequest, Request
 from scrapy.selector import HtmlXPathSelector
 from scrapy.spider import BaseSpider
 
 from edzapp.items import JobItem, JobItemLoader
+
 
 class EdZappSpider(BaseSpider):
     name = "edzapp"
@@ -63,13 +63,13 @@ class EdZappSpider(BaseSpider):
 
             job_id = re.search('(\d+)$', href).groups()[0]
             l.add_value('job_id', job_id)
-            
+
             if settings['PARSE_JOB_PAGES']:
                 yield Request(
-                          job_url,
-                          meta={'itemloader': l},
-                          callback=self.parse_job_page
-                      )
+                    job_url,
+                    meta={'itemloader': l},
+                    callback=self.parse_job_page
+                )
             else:
                 yield job
 
@@ -80,18 +80,18 @@ class EdZappSpider(BaseSpider):
         if next_page_href:
             eventtarget = next_page_href.re("\('(ctl.+)',")
             yield FormRequest.from_response(
-                                  response,
-                                  formdata={
-                                      "__EVENTTARGET": eventtarget,
-                                      "__EVENTARGUMENT": ''
-                                  },
-                                  dont_click=True,
-                                  callback=self.parse_tables)
-            
+                response,
+                formdata={
+                    "__EVENTTARGET": eventtarget,
+                    "__EVENTARGUMENT": ''
+                },
+                dont_click=True,
+                callback=self.parse_tables)
+
     def parse_job_page(self, response):
         hxs = HtmlXPathSelector(response)
         l = response.meta['itemloader']
-        
+
         description = hxs.select('//span[@id="ctl00_oJobPosting_lblPositionDescription"]//text()').extract()
         l.add_value('description', description)
 
