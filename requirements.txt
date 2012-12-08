@@ -1,10 +1,10 @@
-Scrapy==0.14.4
-Twisted==12.0.0
+Django==1.4.2
+Scrapy==0.16.3
+Twisted==12.2.0
 argparse==1.2.1
-distribute==0.6.24
-lxml==2.3.4
+distribute==0.6.32
+lxml==3.0.1
 pyOpenSSL==0.13
 w3lib==1.2
 wsgiref==0.1.2
-zope.interface==4.0.1
-Django==1.4
+zope.interface==4.0.2
