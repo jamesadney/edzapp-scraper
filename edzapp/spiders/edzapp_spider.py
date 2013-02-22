@@ -71,7 +71,7 @@ class EdZappSpider(BaseSpider):
                     callback=self.parse_job_page
                 )
             else:
-                yield job
+                yield l.load_item()
 
         # Get next page
         current_page = table.select('tr[last()]//span[1]')
