@@ -14,14 +14,15 @@ SPIDER_MODULES = ['edzapp.spiders']
 NEWSPIDER_MODULE = 'edzapp.spiders'
 USER_AGENT = 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008071615 Fedora/3.0.1-1.fc9 Firefox/3.0.1'
 ITEM_PIPELINES = [
-#    'edzapp.pipelines.DjangoJobPipeline',
+    #    'edzapp.pipelines.DjangoJobPipeline',
 ]
 DOWNLOAD_DELAY = 3
 
 ROLE = constants.ROLES['TEACHER/CLASSIFIED']
 PARSE_JOB_PAGES = True
 
-import sys, os
+import sys
+import os
 
 # Directory containing django project
 PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))

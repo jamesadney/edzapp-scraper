@@ -7,21 +7,21 @@ from django_edzapp.jobs.models import Job
 
 
 def to_datetime(string):
-	try:
-		datetime_object = datetime.strptime(string, '%m/%d/%Y')
-		out = unicode(datetime_object.date())
-	except ValueError:
-		out = None
+    try:
+        datetime_object = datetime.strptime(string, '%m/%d/%Y')
+        out = unicode(datetime_object.date())
+    except ValueError:
+        out = None
 
-	return out
+    return out
 
 
 class JobItemLoader(ItemLoader):
-	default_input_processor = Identity()
-	default_output_processor = Join()
+    default_input_processor = Identity()
+    default_output_processor = Join()
 
-	deadline_in = MapCompose(to_datetime)
-	date_posted_in = MapCompose(to_datetime)
+    deadline_in = MapCompose(to_datetime)
+    date_posted_in = MapCompose(to_datetime)
 
 
 class JobItem(DjangoItem):
