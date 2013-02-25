@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 import json
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
@@ -8,7 +8,9 @@ from jobs.models import Job
 
 def index(request):
     jobs = Job.objects.exclude(deadline=None).filter(deadline__gte=date.today()).order_by("deadline")
-    no_deadlines = Job.objects.exclude(date_posted=None).filter(deadline=None).order_by("date_posted")
+
+    six_months_ago = date.today() - timedelta(weeks=26)
+    no_deadlines = Job.objects.exclude(date_posted=None).exclude(date_posted__lt=six_months_ago).exclude(date_posted__gt=date.today()).filter(deadline=None).order_by("-date_posted")
     return render(request, 'jobs/index.html', {"jobs": jobs,
                                                "no_deadlines": no_deadlines})
 
