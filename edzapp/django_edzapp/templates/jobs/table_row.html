@@ -10,6 +10,9 @@
 		</a>
 	{% endif %}
 	</td>
+	<td>	
+		{{ job.date_posted|date:"SHORT_DATE_FORMAT"}}
+	</td>
 	<td>
 		{{ job.deadline|date:"SHORT_DATE_FORMAT"|default:"Open until filled" }}
 	</td>
