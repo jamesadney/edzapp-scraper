@@ -41,7 +41,9 @@
 			<ul>
 			{% for job in starred_jobs %}
 			<li>
-				<a title="Details" href={% url jobs.views.detail job.job_id %}> {{ job.deadline }} | {{ job.position }}</a>
+				<a title="Details" href={% url jobs.views.detail job.job_id %}>
+					{% if job.deadline %} {{ job.deadline }} | {% endif %} {{ job.position }}
+				</a>
 			</li>
 			{% endfor %}
 			</ul>
