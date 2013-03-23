@@ -10,9 +10,16 @@ def index(request):
     jobs = Job.objects.exclude(deadline=None).filter(deadline__gte=date.today()).order_by("deadline")
 
     six_months_ago = date.today() - timedelta(weeks=26)
-    no_deadlines = Job.objects.exclude(date_posted=None).exclude(date_posted__lt=six_months_ago).exclude(date_posted__gt=date.today()).filter(deadline=None).order_by("-date_posted")
+    no_deadlines = Job.objects.exclude(date_posted=None).exclude(
+        date_posted__lt=six_months_ago).exclude(date_posted__gt=date.today()).filter(deadline=None).order_by("-date_posted")
+
+    try:
+        starred_jobs = request.user.job_set.order_by("deadline")
+    except AttributeError:
+        starred_jobs = None
     return render(request, 'jobs/index.html', {"jobs": jobs,
-                                               "no_deadlines": no_deadlines})
+                                               "no_deadlines": no_deadlines,
+                                               "starred_jobs": starred_jobs})
 
 
 def all(request):

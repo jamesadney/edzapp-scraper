@@ -39,7 +39,7 @@
 		<div class="span4" id="saved-jobs">
 			<h2>Starred</h2>
 			<ul>
-			{% for job in user.job_set.all %}
+			{% for job in starred_jobs %}
 			<li>
 				<a title="Details" href={% url jobs.views.detail job.job_id %}>{{ job.position }}</a>
 			</li>
